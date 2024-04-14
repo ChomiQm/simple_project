@@ -2,7 +2,7 @@
 
 ## Opis
 
-Projekt "simple_project_task" to aplikacja webowa służąca do zarządzania dokumentami. Umożliwia użytkownikom przeglądanie, dodawanie i zarządzanie dokumentami po zalogowaniu. Aplikacja została stworzona przy użyciu C# 12 i .NET 8.0, z wykorzystaniem Microsoft SQL Server oraz Identity Framework dla zarządzania uwierzytelnieniem i autoryzacją użytkowników.
+Projekt "simple_project_task" to aplikacja webowa służąca do zarządzania dokumentami. Umożliwia użytkownikom przeglądanie, dodawanie i zarządzanie dokumentami po zalogowaniu. Aplikacja została stworzona przy użyciu C# 12 i .NET 8.0, VueJS itp. z wykorzystaniem Microsoft SQL Server oraz Identity Framework dla zarządzania uwierzytelnieniem i autoryzacją użytkowników.
 
 ## Technologie
 
