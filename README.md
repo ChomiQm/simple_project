@@ -41,7 +41,7 @@ Zmodyfikuj plik `appsettings.json` według swojej konfiguracji bazy danych:
 ```
 
 
-Frontend: 
-Aby zainstalować niezbędne pakiety, wykonaj następujące polecenie w katalogu projektu frontend: npm install
-Backend: 
-W większości przypadków pakiety NuGet powinny zainstalować się automatycznie, ale na wszelki: dotnet restore -> dotnet run
+Frontend:  
+Aby zainstalować niezbędne pakiety, wykonaj następujące polecenie w katalogu projektu frontend: npm install  
+Backend:  
+W większości przypadków pakiety NuGet powinny zainstalować się automatycznie, ale na wszelki: dotnet restore -> dotnet run  
