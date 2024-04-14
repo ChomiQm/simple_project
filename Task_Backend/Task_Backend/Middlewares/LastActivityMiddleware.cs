@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Task_Backend.Models;
 
@@ -8,61 +9,68 @@ namespace Task_Backend.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<LastActivityMiddleware> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public LastActivityMiddleware(
-            RequestDelegate next,
-            ILogger<LastActivityMiddleware> logger,
-            UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public LastActivityMiddleware(RequestDelegate next, ILogger<LastActivityMiddleware> logger)
         {
             _next = next;
             _logger = logger;
-            _userManager = userManager;
-            _roleManager = roleManager;
         }
 
-        public async Task InvokeAsync(HttpContext context, ModelContext dbContext)
+        public async Task InvokeAsync(HttpContext context, ModelContext dbContext, IServiceScopeFactory scopeFactory)
         {
             if (context.User.Identity == null)
             {
                 throw new ArgumentNullException(nameof(context), "HttpContext cannot be null");
             }
 
-
             if (context.User.Identity.IsAuthenticated)
             {
-                var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier);
-                if (userIdClaim == null)
+                try
                 {
-                    _logger.LogWarning("UserId claim is null for an authenticated user.");
-                }
-                else
-                {
-                    var user = await dbContext.Users.FindAsync(userIdClaim.Value);
-                    if (user == null)
+                    using (var scope = scopeFactory.CreateScope())
                     {
-                        _logger.LogWarning($"User not found with ID: {userIdClaim.Value}");
-                    }
-                    else
-                    {
-                        if (!user.LastActive.HasValue)
-                        {
-                            if (!await _roleManager.RoleExistsAsync("User"))
-                            {
-                                await _roleManager.CreateAsync(new IdentityRole("User"));
-                            }
-                            await _userManager.AddToRoleAsync(user, "User");
-                        }
+                        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                        user.LastActive = DateTime.UtcNow;
-                        await dbContext.SaveChangesAsync();
+                        var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier);
+                        if (userIdClaim == null)
+                        {
+                            _logger.LogWarning("UserId claim is null for an authenticated user.");
+                        }
+                        else
+                        {
+                            var user = await userManager.FindByIdAsync(userIdClaim.Value);
+                            if (user == null)
+                            {
+                                _logger.LogWarning($"User not found with ID: {userIdClaim.Value}");
+                            }
+                            else
+                            {
+                                if (!user.LastActive.HasValue)
+                                {
+                                    if (!await roleManager.RoleExistsAsync("User"))
+                                    {
+                                        await roleManager.CreateAsync(new IdentityRole("User"));
+                                    }
+                                    await userManager.AddToRoleAsync(user, "User");
+                                }
+
+                                user.LastActive = DateTime.UtcNow;
+                                await userManager.UpdateAsync(user);
+                            }
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred while updating the user's last activity.");
+                    throw;
+                }
+
             }
 
             await _next(context);
         }
     }
 }
+

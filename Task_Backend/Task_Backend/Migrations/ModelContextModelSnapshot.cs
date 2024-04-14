@@ -175,13 +175,13 @@ namespace Task_Backend.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -230,10 +230,6 @@ namespace Task_Backend.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -245,16 +241,8 @@ namespace Task_Backend.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("LastActive")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -300,6 +288,38 @@ namespace Task_Backend.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", "dbo");
+                });
+
+            modelBuilder.Entity("Task_Backend.Models.UserData", b =>
+                {
+                    b.Property<string>("UserDataId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserDataId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("UserDatas", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -364,9 +384,23 @@ namespace Task_Backend.Migrations
                     b.Navigation("Document");
                 });
 
+            modelBuilder.Entity("Task_Backend.Models.UserData", b =>
+                {
+                    b.HasOne("Task_Backend.Models.User", "User")
+                        .WithOne("UserData")
+                        .HasForeignKey("Task_Backend.Models.UserData", "UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Task_Backend.Models.Document", b =>
                 {
                     b.Navigation("DocumentItems");
+                });
+
+            modelBuilder.Entity("Task_Backend.Models.User", b =>
+                {
+                    b.Navigation("UserData");
                 });
 #pragma warning restore 612, 618
         }

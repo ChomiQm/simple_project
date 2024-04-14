@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Task_Backend.DTO;
 using Task_Backend.Models;
 
 namespace Task_Backend.Controllers
@@ -18,7 +20,8 @@ namespace Task_Backend.Controllers
             _logger = logger;
         }
 
-        [HttpGet("getdocuments")]
+        [HttpGet("getDocuments")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Document>>> GetDocuments(
         [FromQuery] int pageIndex = 0,
         [FromQuery] int pageSize = 10,
@@ -77,59 +80,92 @@ namespace Task_Backend.Controllers
             return Ok(response);
         }
 
-
-        [HttpGet("getdocument/{id}")]
-        public async Task<ActionResult<Document>> GetDocument([FromRoute] int id)
+        [HttpGet("getDocument/{id}")]
+        [Authorize]
+        public async Task<ActionResult<DocumentDto>> GetDocument([FromRoute] int id)
         {
-            _logger.LogInformation($"Pobieranie szczegółów dokumentu o ID: {id}.");
             var document = await _context.Documents
-                .Include(d => d.DocumentItems)
-                .SingleOrDefaultAsync(d => d.Id == id);
+                .Where(d => d.Id == id)
+                .Select(d => new DocumentDto
+                {
+                    Id = d.Id,
+                    Type = d.Type,
+                    Date = d.Date,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    City = d.City,
+                    DocumentItems = (ICollection<DocumentItem>)d.DocumentItems.Select(di => new DocumentItemDto
+                    {
+                        DocumentId = di.DocumentId,
+                        Ordinal = di.Ordinal,
+                        Product = di.Product,
+                        Quantity = di.Quantity,
+                        Price = di.Price,
+                        TaxRate = di.TaxRate
+                    }).ToList()
+                })
+                .SingleOrDefaultAsync();
 
             if (document == null)
             {
-                _logger.LogWarning($"Szczegóły dokumentu o ID: {id} nie zostały znalezione.");
                 return NotFound();
             }
 
-            _logger.LogInformation($"Zwrócono szczegóły dokumentu o ID: {id}.");
             return document;
         }
 
         [HttpPut("updateDocument/{id}")]
-        public async Task<IActionResult> PutDocument([FromRoute]int id, [FromBody] Document document)
+        [Authorize]
+        public async Task<IActionResult> PutDocument([FromRoute] int id, [FromBody] DocumentDto updateDto)
         {
-            if (id != document.Id)
+            _logger.LogInformation("Rozpoczęcie aktualizacji dokumentu o identyfikatorze {DocumentId}.", id);
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                _logger.LogWarning("Dane wejściowe dla aktualizacji dokumentu są nieprawidłowe.");
+                return BadRequest(ModelState);
             }
 
             var dbDocument = await _context.Documents.FindAsync(id);
             if (dbDocument == null)
             {
+                _logger.LogWarning("Nie znaleziono dokumentu o identyfikatorze {DocumentId} do aktualizacji.", id);
                 return NotFound();
             }
 
             // Mapowanie właściwości, które mogą być aktualizowane
-            dbDocument.Type = document.Type;
-            dbDocument.Date = document.Date;
-            dbDocument.FirstName = document.FirstName;
-            dbDocument.LastName = document.LastName;
-            dbDocument.City = document.City;
+            dbDocument.Type = updateDto.Type;
+            dbDocument.Date = updateDto.Date;
+            dbDocument.FirstName = updateDto.FirstName;
+            dbDocument.LastName = updateDto.LastName;
+            dbDocument.City = updateDto.City;
 
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Dokument o identyfikatorze {DocumentId} został zaktualizowany.", id);
             }
-            catch (DbUpdateConcurrencyException) when (!DocumentExists(id))
+            catch (DbUpdateConcurrencyException ex)
             {
-                return NotFound();
+                if (!DocumentExists(id))
+                {
+                    _logger.LogWarning("Dokument o identyfikatorze {DocumentId} już nie istnieje.", id);
+                    return NotFound();
+                }
+                _logger.LogError(ex, "Błąd współbieżności przy aktualizacji dokumentu o identyfikatorze {DocumentId}.", id);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Wystąpił nieoczekiwany błąd podczas aktualizacji dokumentu o identyfikatorze {DocumentId}.", id);
+                return StatusCode(500, "Internal server error - unable to update document");
             }
 
             return NoContent();
         }
 
         [HttpPost("addDocument")]
+        [Authorize]
         public async Task<ActionResult<Document>> PostDocument([FromBody] Document document)
         {
             _logger.LogInformation("Rozpoczęcie dodawania nowego dokumentu.");
@@ -162,6 +198,7 @@ namespace Task_Backend.Controllers
         }
 
         [HttpDelete("deleteDocument/{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteDocument([FromRoute] int id)
         {
             _logger.LogInformation($"Próba usunięcia dokumentu o ID: {id}.");
@@ -180,6 +217,7 @@ namespace Task_Backend.Controllers
         }
 
         [HttpDelete("deleteAll")]
+        [Authorize]
         public async Task<IActionResult> DeleteAllDocuments([FromQuery] string confirmation)
         {
             _logger.LogWarning("Rozpoczęcie operacji usuwania wszystkich dokumentów.");
@@ -187,7 +225,7 @@ namespace Task_Backend.Controllers
             if (confirmation != "CONFIRM")
             {
                 _logger.LogWarning("Próba usunięcia wszystkich dokumentów bez potwierdzenia.");
-                return BadRequest("Operacja wymaga potwierdzenia.");
+                return BadRequest("Needs confirmation.");
             }
 
             try
@@ -209,8 +247,6 @@ namespace Task_Backend.Controllers
                 return StatusCode(500, "Internal server error - unable to delete all documents");
             }
         }
-
-
 
         private bool DocumentExists(int id)
         {

@@ -10,7 +10,7 @@ public partial class ModelContext : IdentityDbContext<User>
 
     public DbSet<Document> Documents { get; set; }
     public DbSet<DocumentItem> DocumentItems { get; set; }
-
+    public DbSet<UserData> UserDatas { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); // schema cfg for identity
@@ -38,6 +38,10 @@ public partial class ModelContext : IdentityDbContext<User>
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("Users");
+
+            entity.HasOne(u => u.UserData)
+                .WithOne(ud => ud.User)
+                .HasForeignKey<UserData>(ud => ud.UserId);
         });
 
         modelBuilder.Entity<Document>(entity =>
@@ -64,6 +68,19 @@ public partial class ModelContext : IdentityDbContext<User>
             entity.Property(e => e.Quantity).IsRequired();
             entity.Property(e => e.Price).IsRequired();
             entity.Property(e => e.TaxRate).IsRequired();
+        });
+
+        modelBuilder.Entity<UserData>(entity =>
+        {
+            entity.HasKey(ud => ud.UserDataId);
+
+            entity.Property(ud => ud.FirstName).IsRequired();
+            entity.Property(ud => ud.LastName).IsRequired();
+            entity.Property(ud => ud.City).IsRequired();
+
+            entity.HasOne(ud => ud.User)
+                .WithOne(u => u.UserData)
+                .HasForeignKey<UserData>(ud => ud.UserId);
         });
 
     }

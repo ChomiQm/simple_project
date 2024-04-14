@@ -4730,11 +4730,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mateu\\source\\repos\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
+      "projectUniqueName": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
       "projectName": "Task_Backend",
-      "projectPath": "C:\\Users\\mateu\\source\\repos\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
+      "projectPath": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
       "packagesPath": "C:\\Users\\mateu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mateu\\source\\repos\\Task_Backend\\Task_Backend\\obj\\",
+      "outputPath": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

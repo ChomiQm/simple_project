@@ -18,11 +18,11 @@ namespace Task_Backend.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "First name cannot exceed 100 characters.")]
+        [StringLength(30, ErrorMessage = "First name cannot exceed 30 characters.")]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(100, ErrorMessage = "Last name cannot exceed 100 characters.")]
+        [StringLength(30, ErrorMessage = "Last name cannot exceed 30 characters.")]
         public string LastName { get; set; } = null!;
 
         [Required]

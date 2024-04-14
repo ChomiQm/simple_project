@@ -2,8 +2,7 @@
 {
     public static class LastActivityMiddlewareExtensions
     {
-        public static IApplicationBuilder UseLastActivity(
-            this IApplicationBuilder builder)
+        public static IApplicationBuilder UseLastActivity(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<LastActivityMiddleware>();
         }

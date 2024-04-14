@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hM24BUgrtYe3HKaQAwIHyMfydMKnrsq1eqJWXlL7RHm+vWHWtucmecg6t7Bc3T0gZuMtC0tYjzzwXfSWfQRNCQ==",
+  "dgSpecHash": "3+vGcvR9Zl+0ben9LnkymdbAGXBzO1nmvh27eFtT2IL0Bmq+HaPOj7ZWDaXYQ+plyigdYw2+tTQZvDb9vaoU8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mateu\\source\\repos\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
+  "projectFilePath": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Task_Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mateu\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\mateu\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

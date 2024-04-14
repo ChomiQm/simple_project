@@ -1,30 +1,39 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { useStore } from 'vuex';
+import { RouterLink, RouterView, useRouter } from 'vue-router';
+import { computed } from 'vue';
+
+const store = useStore();
+const router = useRouter();
+const isAuthenticated = computed(() => store.getters.isAuthenticated);
+
+const logout = async () => {
+  await store.dispatch('logout');
+  await router.push('/login');
+};
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <span v-if="isAuthenticated"> | </span>
+      <RouterLink to="/documents" v-if="isAuthenticated">Documents</RouterLink>
+      <span v-if="isAuthenticated && !isLoginOrRegisterRoute"> | </span>
+      <RouterLink to="/user" v-if="isAuthenticated">User</RouterLink>
+      <span v-if="isAuthenticated"> | </span>
+      <a href="#" v-if="isAuthenticated" @click.prevent="logout">Logout</a>
+      <span v-if="!isAuthenticated"> | </span>
+      <RouterLink to="/login" v-if="!isAuthenticated">Login</RouterLink>
+      <span v-if="!isAuthenticated"> | </span>
+      <RouterLink to="/register" v-if="!isAuthenticated">Register</RouterLink>
+    </nav>
+    <RouterView/>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+nav span {
+  color: #fff; /* adjust your color for the separator */
 }
 </style>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 using Task_Backend.Middlewares;
 using Task_Backend.Models;
 using Task_Backend.Seeders;
@@ -14,6 +15,7 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
@@ -52,9 +54,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = true;
-    options.SignIn.RequireConfirmedAccount = false; // i can change this after
+    options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequiredLength = 8;
 });
+
+builder.Services.AddControllers();
 
 builder.Services.AddControllersWithViews();
 
@@ -73,18 +77,17 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("DefaultCorsPolicy", builder =>
     {
-        builder.WithOrigins("https://localhost:5169")
+        builder.WithOrigins("https://localhost:5173")
             .AllowAnyMethod()
             .WithHeaders("content-type", "authorization")
             .AllowCredentials();
     });
 });
 
+
 /* APP */
 
 var app = builder.Build();
-
-app.UseMiddleware<LastActivityMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -119,6 +122,8 @@ app.UseCors("DefaultCorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapIdentityApi<User>();
+
+//app.UseMiddleware<LastActivityMiddleware>();
 
 app.MapControllers();
 
