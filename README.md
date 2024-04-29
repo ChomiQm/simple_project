@@ -1,10 +1,10 @@
 # simple_project_task
 
-## Opis
+## Description
 
-Projekt "simple_project_task" to aplikacja webowa służąca do zarządzania dokumentami. Umożliwia użytkownikom przeglądanie, dodawanie i zarządzanie dokumentami po zalogowaniu. Aplikacja została stworzona przy użyciu C# 12 i .NET 8.0, VueJS itp. z wykorzystaniem Microsoft SQL Server oraz Identity Framework dla zarządzania uwierzytelnieniem i autoryzacją użytkowników.
+The "simple_project_task" project is a web application designed for document management. It allows users to browse, add, and manage documents after logging in. The application is developed using C# 12 and .NET 8.0, and utilizes VueJS, Microsoft SQL Server, and the Identity Framework for user authentication and authorization management.
 
-## Technologie
+## Technologies
 
 - **C# 12**
 - **.NET 8.0**
@@ -12,18 +12,18 @@ Projekt "simple_project_task" to aplikacja webowa służąca do zarządzania dok
 - **Identity Framework**
 - **SSMS (SQL Server Management Studio)**
 - **VueJS**
-- **Javascript**
+- **JavaScript**
 - **Vite**
 
-## Wymagania
+## Requirements
 
-Użytkownicy muszą zarejestrować się i zalogować, aby przeglądać dokumenty. Aby dodać dokumenty, użytkownicy muszą uzupełnić swoje dane osobowe.
+Users must register and log in to view documents. To add documents, users must complete their personal information.
 
-## Konfiguracja
+## Configuration
 
 ### Backend
 
-Zrobić sobie plik plik `appsettings.json` m. in taki do cfg bazy danych:
+Create an `appsettings.json` file for database configuration, as follows:
 
 ```json
 {
@@ -42,6 +42,13 @@ Zrobić sobie plik plik `appsettings.json` m. in taki do cfg bazy danych:
 
 
 ### Frontend:  
-Zainstalować pakiety trzeba: npm install  
+Install packages: 
+```bash
+npm install
+```
 ### Backend pt2:  
-W większości przypadków pakiety NuGet powinny zainstalować się automatycznie, ale na wszelki: dotnet restore -> dotnet run  
+In most cases, NuGet packages should install automatically, but just in case:
+```bash
+dotnet restore
+dotnet run  
+```
