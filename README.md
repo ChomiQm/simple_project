@@ -1,4 +1,5 @@
 # simple_project_task
+![MebloArt App Screenshot](Documents.png)
 
 ## Description
 
