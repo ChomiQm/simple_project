@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using Task_Backend.Middlewares;
 using Task_Backend.Models;
 using Task_Backend.Seeders;
 

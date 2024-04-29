@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|solutionrelative:task_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|solutionrelative:task_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\controllers\\documentitemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\middlewares\\lastactivitymiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|solutionrelative:task_backend\\middlewares\\lastactivitymiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|solutionrelative:task_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B265B943-9349-42F1-A3FF-2992FB1679AE}|Task_Backend\\Task_Backend.csproj|c:\\users\\mateu\\source\\repos\\task_documents\\task_backend\\task_backend\\dto\\userdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,11 +42,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "DbSeeder.cs",
               "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Seeders\\DbSeeder.cs",
               "RelativeDocumentMoniker": "Task_Backend\\Seeders\\DbSeeder.cs",
@@ -63,16 +59,17 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Program.cs",
               "RelativeDocumentMoniker": "Task_Backend\\Program.cs",
               "ToolTip": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Program.cs",
               "RelativeToolTip": "Task_Backend\\Program.cs",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAAAHkAAAAYAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAAAAsAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-29T08:18:45.623Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -132,12 +129,11 @@
               "RelativeToolTip": "Task_Backend\\Controllers\\DocumentItemsController.cs",
               "ViewState": "AQIAAHwAAAAAAAAAAAAkwHkAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T19:08:42.065Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-14T19:08:42.065Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "UserDataDto.cs",
               "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\DTO\\UserDataDto.cs",
               "RelativeDocumentMoniker": "Task_Backend\\DTO\\UserDataDto.cs",
@@ -149,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Document.cs",
               "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Models\\Document.cs",
               "RelativeDocumentMoniker": "Task_Backend\\Models\\Document.cs",
@@ -161,20 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\appsettings.json",
-              "RelativeDocumentMoniker": "Task_Backend\\appsettings.json",
-              "ToolTip": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\appsettings.json",
-              "RelativeToolTip": "Task_Backend\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-14T10:51:40.237Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "ModelContext.cs",
               "DocumentMoniker": "C:\\Users\\mateu\\source\\repos\\Task_Documents\\Task_Backend\\Task_Backend\\Models\\ModelContext.cs",
               "RelativeDocumentMoniker": "Task_Backend\\Models\\ModelContext.cs",
